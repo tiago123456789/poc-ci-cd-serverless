@@ -1,0 +1,20 @@
+{
+  "name": "poc-ci-cd-serverless",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "start:dev": "sls offline start",
+    "test": "jest ./tests/**/*.test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "serverless-dotenv-plugin": "^3.9.0",
+    "serverless-offline": "^8.0.0"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6"
+  }
+}
