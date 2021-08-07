@@ -28,6 +28,10 @@ jobs:
     - run: npm i
     - run: npm test
     
+    - name: "Create .env"
+      run: |
+        echo "URL_API="www.google.com.br"" > .env
+
     - name: "Deploy"
       uses: serverless/github-action@master
       with:
