@@ -28,7 +28,7 @@ jobs:
 
     - name: "Create .env"
       run: |
-        echo "URL_API="www.google.com.br"" > .env
+        echo "URL_API={{ secrets.URL_API }}" > .env
 
     - name: "Deploy"
       uses: serverless/github-action@master
