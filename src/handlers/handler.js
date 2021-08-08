@@ -8,7 +8,8 @@ module.exports.hello = async (event) => {
     body: JSON.stringify(
       {
         message: 'Go Serverless v1.0! Your function executed successfully!',
-        resultCalculeted: calculator.sum(10, 10)
+        resultCalculeted: calculator.sum(10, 10),
+        urlApi: process.env.URL_API
       },
       null,
       2
