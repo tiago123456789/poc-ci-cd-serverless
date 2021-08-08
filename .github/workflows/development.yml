@@ -23,17 +23,29 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm i
-    - run: npm test
+    
+    - name: "Install packages"
+      run: npm install
+    
+    - name: "Run applications tests"
+      run: npm test
 
     - name: "Create .env"
       run: |
         echo "URL_API={{ secrets.URL_API }}" > .env
 
-    - name: "Deploy"
+    - name: "Deploy functions in AWS"
       uses: serverless/github-action@master
       with:
         args: deploy --stage dev
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+    
+    - name: notify progress
+      if: always()
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: ${{ secrets.WEBHOOK_ID }}
+        webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
+        message: The deploy environment development executed ${{ job.status }}.
