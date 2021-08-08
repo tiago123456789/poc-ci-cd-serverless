@@ -27,7 +27,7 @@ jobs:
         cache: 'npm'
     - run: npm i
     - run: npm test
-    
+
     - name: "Create .env"
       run: |
         echo "URL_API="www.google.com.br"" > .env
@@ -37,5 +37,5 @@ jobs:
       with:
         args: deploy
       env:
-        ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
-        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
