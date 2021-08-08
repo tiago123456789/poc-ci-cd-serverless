@@ -29,7 +29,7 @@ jobs:
 
     - name: "Create .env"
       run: |
-        echo "URL_API={{ secrets.URL_API_DEV }}" > .env
+        echo URL_API={{ secrets.URL_API_DEV }} > .env
 
     - name: "Deploy functions in AWS"
       uses: serverless/github-action@master
