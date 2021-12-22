@@ -1,8 +1,11 @@
-name: Environment development      
+name: CI(continuous integration)
 
 on:
-  push:
-    branches: [ develop ]
+  pull_request:
+    branches: 
+      - master
+      - staging
+      - develop
 
 jobs:
   build:
@@ -15,6 +18,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
@@ -27,22 +31,10 @@ jobs:
     - name: "Run applications tests"
       run: npm test
 
-    - name: "Create .env"
-      run: |
-        echo URL_API=${{ secrets.URL_API_DEV }} > .env
-
-    - name: "Deploy functions in AWS"
-      uses: serverless/github-action@master
-      with:
-        args: deploy --stage dev
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-    
     - name: notify progress
       if: always()
       uses: appleboy/discord-action@master
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        message: The deploy environment development executed ${{ job.status }}.
+        message: "CI(continuous integration) executed ${{ job.status }}"
