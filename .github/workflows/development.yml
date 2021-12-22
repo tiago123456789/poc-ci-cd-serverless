@@ -2,7 +2,7 @@ name: Environment development
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ master ]
 
 jobs:
   build:
@@ -15,6 +15,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
@@ -33,6 +34,7 @@ jobs:
 
     - name: "Deploy functions in AWS"
       uses: serverless/github-action@master
+      id: deploy_app
       with:
         args: deploy --stage dev
       env:
@@ -45,4 +47,4 @@ jobs:
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        message: The deploy environment development executed ${{ job.status }}.
+        message: "The deploy environment development executed ${{ job.status }}. Output: ${{ steps.deploy_app.output }}"
