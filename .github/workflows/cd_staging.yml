@@ -1,8 +1,8 @@
-name: Envirnoment production
+name: Environment staging
 
 on:
   push:
-    branches: [ master ]
+    branches: [ staging ]
 
 jobs:
   build:
@@ -15,34 +15,29 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     
-    - name: "Install packages"
-      run: npm install
-    
-    - name: "Run applications tests"
-      run: npm test
-
     - name: "Create .env"
       run: |
-        echo URL_API=${{ secrets.URL_API_PROD }} > .env
+        echo URL_API=${{ secrets.URL_API_STAGING }} > .env
 
     - name: "Deploy"
       uses: serverless/github-action@master
       with:
-        args: deploy --stage production
+        args: deploy --stage staging
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
-     
+
     - name: notify progress
       if: always()
       uses: appleboy/discord-action@master
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        message: The deploy environment production executed ${{ job.status }}.
+        message: The deploy environment staging executed ${{ job.status }}.
