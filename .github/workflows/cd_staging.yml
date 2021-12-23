@@ -32,11 +32,7 @@ jobs:
     - name: "Deploy"
       uses: serverless/github-action@master
       with:
-<<<<<<< HEAD
-        args: -c "echo $(deploy --stage production) >> output.json"
-=======
         args: deploy --stage production
->>>>>>> develop
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
