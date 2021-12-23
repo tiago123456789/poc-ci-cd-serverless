@@ -32,7 +32,11 @@ jobs:
     - name: "Deploy"
       uses: serverless/github-action@master
       with:
-        args: deploy --stage staging
+<<<<<<< HEAD
+        args: -c "echo $(deploy --stage production) >> output.json"
+=======
+        args: deploy --stage production
+>>>>>>> develop
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
@@ -43,4 +47,4 @@ jobs:
       with:
         webhook_id: ${{ secrets.WEBHOOK_ID }}
         webhook_token: ${{ secrets.WEBHOOK_TOKEN }}
-        message: The deploy environment staging executed ${{ job.status }}.
+        message: "The deploy environment staging executed ${{ job.status }}"
